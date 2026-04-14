@@ -92,102 +92,82 @@ streamlit run main.py
 
 若
 
-\[
+$$
 (X_1, X_2, \dots, X_k) \sim \mathrm{Multinomial}(n; p_1, p_2, \dots, p_k)
-\]
+$$
 
 則可使用條件二項分解抽樣：
 
-\[
+$$
 X_1 \sim \mathrm{Binomial}(n, p_1)
-\]
+$$
 
-\[
-X_2 \mid X_1 \sim \mathrm{Binomial}\left(n-X_1, \frac{p_2}{1-p_1}\right)
-\]
+$$
+X_2 \mid X_1 \sim 
+\mathrm{Binomial}
+\left(n-X_1, \frac{p_2}{1-p_1}\right)
+$$
 
 一般形式為：
 
-\[
-X_i \sim \mathrm{Binomial}\left(
+$$
+X_i \sim 
+\mathrm{Binomial}
+\left(
 n-\sum_{j=1}^{i-1}X_j,
 \frac{p_i}{1-\sum_{j=1}^{i-1}p_j}
 \right)
-\]
+$$
 
 最後一個分量為：
 
-\[
+$$
 X_k = n - \sum_{i=1}^{k-1}X_i
-\]
+$$
 
 ### 理論公式
 
 期望值：
 
-\[
+$$
 E[X_i] = n p_i
-\]
+$$
 
 變異數：
 
-\[
+$$
 \mathrm{Var}(X_i) = n p_i (1-p_i)
-\]
+$$
 
-協方差（當 `i \neq j`）：
+協方差（當 $i \neq j$）：
 
-\[
+$$
 \mathrm{Cov}(X_i, X_j) = -n p_i p_j
-\]
+$$
 
 ---
 
 ## 第二頁：Mixture Method
 
-題目機率質量函數：
-
-\[
+$$
 P(X=j)=
 \begin{cases}
 0.11, & j=5,7,9,11,13 \\
 0.09, & j=6,8,10,12,14
 \end{cases}
-\]
+$$
 
-可將其視為混合分布：
-
-- 奇數集合總機率：`5 × 0.11 = 0.55`
-- 偶數集合總機率：`5 × 0.09 = 0.45`
-
-因此先抽：
-
-\[
+$$
 Z \sim \mathrm{Bernoulli}(0.55)
-\]
+$$
 
-- 若 `Z=1`，則從 `{5,7,9,11,13}` 中均勻抽樣
-- 若 `Z=0`，則從 `{6,8,10,12,14}` 中均勻抽樣
-
-也就是：
-
-\[
+$$
 X=
 \begin{cases}
 \mathrm{Uniform}\{5,7,9,11,13\}, & 0.55 \\
 \mathrm{Uniform}\{6,8,10,12,14\}, & 0.45
 \end{cases}
-\]
-
-例如：
-
-\[
-P(X=5)=0.55 \times \frac{1}{5}=0.11
-\]
-
-\[
-P(X=6)=0.45 \times \frac{1}{5}=0.09
-\]
+$$
 
 ---
 
