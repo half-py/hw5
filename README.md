@@ -1,31 +1,69 @@
-# Conditional Multinomial & Mixture Method Simulation App
+# 🎲 Conditional Multinomial & Mixture Method Simulation App
 
-這是一個使用 **Streamlit** 製作的模擬展示工具，整合了兩個作業主題：
+> 使用 **Streamlit** 製作的互動式統計模擬工具，將抽樣演算法、理論公式、GUI 操作與視覺化結果整合在同一個專案中。
 
-1. **Conditional Multinomial Sampler**
-   - 使用條件二項分布（conditional binomial decomposition）來模擬 multinomial 隨機向量
-   - 可調整變數個數 `k`
-   - 前 `k-1` 個機率手動輸入，最後一個機率自動補齊為 1
-   - 比較樣本平均、理論期望值、樣本變異數、理論變異數
-   - 比較樣本 covariance matrix 與理論 covariance matrix
-   - 可切換檢視單一 `X_i` 的模擬分布與理論二項分布
-
-2. **Mixture Method**
-   - 使用混合方法（mixture method）模擬離散隨機變數 `X`
-   - 題目分布為：
-     - `P(X=j)=0.11`，當 `j=5,7,9,11,13`
-     - `P(X=j)=0.09`，當 `j=6,8,10,12,14`
-   - 透過 mixture indicator 先決定奇數組或偶數組，再於組內均勻抽樣
-   - 提供模擬分布圖、樣本統計與樣本預覽
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-App-red)
+![Status](https://img.shields.io/badge/status-active-success)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 ---
 
-## 專案結構
+## ✨ 專案介紹
+
+這是一個以 **統計模擬方法（Simulation Methods）** 為主題的互動式應用程式，內容包含兩大核心主題：
+
+### 🔹 Conditional Multinomial Sampler
+使用 **條件二項分解法（Conditional Binomial Decomposition）** 來模擬 multinomial random vector。
+
+### 🔹 Mixture Method
+使用 **混合方法（Mixture Method）** 模擬離散型隨機變數。
+
+---
+
+## 🚀 專案特色
+
+✅ GUI 互動式操作介面（Streamlit）  
+✅ 理論值 vs 模擬值比較  
+✅ 分布圖形視覺化  
+✅ Covariance Matrix 驗證  
+✅ 可調參數實驗  
+✅ 適合課堂展示 / 作業 / 統計作品集
+
+---
+
+# 🖥️ GUI Preview
+
+將你的截圖放進 `images/` 資料夾後即可展示：
+
+```md
+![主畫面](images/gui-main.png)
+![Multinomial](images/gui-multinomial.png)
+![Mixture](images/gui-mixture.png)
+```
+
+### 主畫面
+
+![主畫面](images/gui-main.png)
+
+### Conditional Multinomial 頁面
+
+![Multinomial](images/gui-multinomial.png)
+
+### Mixture Method 頁面
+
+![Mixture](images/gui-mixture.png)
+
+---
+
+# 📂 專案結構
 
 ```text
-project/
-│
-├── main.py
+hw5/
+│── main.py
+│── requirements.txt
+│── README.md
+│── LICENSE
 │
 └── modules/
     ├── sampler.py
@@ -33,212 +71,194 @@ project/
     ├── stats_utils.py
     ├── plotting.py
     └── ui/
-        ├── __init__.py
-        ├── app.py
         ├── sidebar.py
         ├── summary.py
-        ├── single_x.py
-        ├── tables.py
         ├── covariance.py
-        ├── preview.py
-        ├── formulas.py
+        ├── tables.py
         └── page_mixture.py
 ```
 
 ---
 
-## 安裝方式
-
-建議先建立虛擬環境：
-
-### Windows PowerShell
+# ⚙️ 安裝方式
 
 ```bash
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-```
-
-### Windows cmd
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-```
-
-接著安裝套件：
-
-```bash
+git clone https://github.com/half-py/hw5.git
+cd hw5
 pip install -r requirements.txt
-```
-
----
-
-## 執行方式
-
-在專案根目錄執行：
-
-```bash
 streamlit run main.py
 ```
 
-執行後可在左側欄切換頁面：
+---
 
-- `Multinomial`
-- `Mixture Method`
+# 🎯 功能一：Conditional Multinomial Sampler
+
+若：
+
+$$
+(X_1,X_2,\dots,X_k)\sim Multinomial(n;p_1,p_2,\dots,p_k)
+$$
+
+則可透過條件二項抽樣完成模擬。
 
 ---
 
-## 第一頁：Conditional Multinomial Sampler
+## 📌 演算法步驟
 
-若
+### Input：
+- 試驗次數 `n`
+- 機率向量：
 
-\[
-(X_1, X_2, \dots, X_k) \sim \mathrm{Multinomial}(n; p_1, p_2, \dots, p_k)
-\]
+$$
+(p_1,p_2,\dots,p_k), \quad \sum p_i=1
+$$
 
-則可使用條件二項分解抽樣：
+### Step 1：抽第一類
 
-\[
-X_1 \sim \mathrm{Binomial}(n, p_1)
-\]
+$$
+X_1 \sim Binomial(n,p_1)
+$$
 
-\[
-X_2 \mid X_1 \sim \mathrm{Binomial}\left(n-X_1, \frac{p_2}{1-p_1}\right)
-\]
+### Step 2：抽第二類
 
-一般形式為：
+$$
+X_2 \sim Binomial\left(n-X_1,\frac{p_2}{1-p_1}\right)
+$$
 
-\[
-X_i \sim \mathrm{Binomial}\left(
-n-\sum_{j=1}^{i-1}X_j,
+### Step 3：一般情況
+
+對於第 \(i\) 類：
+
+$$
+X_i \sim Binomial\left(
+n-\sum_{j=1}^{i-1}X_j,\;
 \frac{p_i}{1-\sum_{j=1}^{i-1}p_j}
 \right)
-\]
+$$
 
-最後一個分量為：
+### Step 4：最後一類補齊
 
-\[
-X_k = n - \sum_{i=1}^{k-1}X_i
-\]
-
-### 理論公式
-
-期望值：
-
-\[
-E[X_i] = n p_i
-\]
-
-變異數：
-
-\[
-\mathrm{Var}(X_i) = n p_i (1-p_i)
-\]
-
-協方差（當 `i \neq j`）：
-
-\[
-\mathrm{Cov}(X_i, X_j) = -n p_i p_j
-\]
+$$
+X_k=n-\sum_{i=1}^{k-1}X_i
+$$
 
 ---
 
-## 第二頁：Mixture Method
+## 📌 理論公式
 
-題目機率質量函數：
+### 期望值
 
-\[
+$$
+E[X_i]=np_i
+$$
+
+### 變異數
+
+$$
+Var(X_i)=np_i(1-p_i)
+$$
+
+### 協方差
+
+$$
+Cov(X_i,X_j)=-np_ip_j
+$$
+
+---
+
+# 🎯 功能二：Mixture Method
+
+目標分布：
+
+$$
 P(X=j)=
 \begin{cases}
-0.11, & j=5,7,9,11,13 \\
-0.09, & j=6,8,10,12,14
+0.11,& j=5,7,9,11,13 \\
+0.09,& j=6,8,10,12,14
 \end{cases}
-\]
-
-可將其視為混合分布：
-
-- 奇數集合總機率：`5 × 0.11 = 0.55`
-- 偶數集合總機率：`5 × 0.09 = 0.45`
-
-因此先抽：
-
-\[
-Z \sim \mathrm{Bernoulli}(0.55)
-\]
-
-- 若 `Z=1`，則從 `{5,7,9,11,13}` 中均勻抽樣
-- 若 `Z=0`，則從 `{6,8,10,12,14}` 中均勻抽樣
-
-也就是：
-
-\[
-X=
-\begin{cases}
-\mathrm{Uniform}\{5,7,9,11,13\}, & 0.55 \\
-\mathrm{Uniform}\{6,8,10,12,14\}, & 0.45
-\end{cases}
-\]
-
-例如：
-
-\[
-P(X=5)=0.55 \times \frac{1}{5}=0.11
-\]
-
-\[
-P(X=6)=0.45 \times \frac{1}{5}=0.09
-\]
+$$
 
 ---
 
-## 使用套件
+## 📌 演算法步驟
 
-- `streamlit`
-- `numpy`
-- `pandas`
-- `matplotlib`
+### Step 1：先抽群組指標
 
----
+$$
+Z\sim Bernoulli(0.55)
+$$
 
-## Git 建議流程
+### Step 2：若 \(Z=1\)
 
-### 初始化 Git
+$$
+X\sim Uniform\{5,7,9,11,13\}
+$$
 
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-```
+### Step 3：若 \(Z=0\)
 
-### 新增遠端倉庫後推送
-
-```bash
-git remote add origin <你的-repo-url>
-git branch -M main
-git push -u origin main
-```
+$$
+X\sim Uniform\{6,8,10,12,14\}
+$$
 
 ---
 
-## .gitignore 建議忽略內容
+## 📌 核心概念
 
-已附上 `.gitignore`，會忽略：
+將複雜分布拆成兩層：
 
-- `.venv/`
-- `__pycache__/`
-- `.pyc`
-- `.streamlit/`
-- `.idea/`
-- `.vscode/`
-- 系統暫存檔
+- 第一層：選群組
+- 第二層：群組內均勻抽樣
 
 ---
 
-## 備註
+# 📊 模組說明
 
-這份專案適合：
+| 模組 | 功能 |
+|------|------|
+| `main.py` | 啟動 Streamlit App |
+| `sampler.py` | 抽樣演算法 |
+| `theory.py` | 理論公式 |
+| `stats_utils.py` | 樣本統計 |
+| `plotting.py` | 繪圖 |
+| `ui/` | 介面元件 |
 
-- 模擬方法課程作業
-- multinomial 抽樣展示
-- mixture method 題目展示
-- 作為 Streamlit 統計互動小工具範例
+---
+
+# 🧪 使用套件
+
+- Streamlit
+- NumPy
+- Pandas
+- Matplotlib
+
+---
+
+# 🎓 適合用途
+
+✅ Simulation Methods 作業  
+✅ 統計課報告展示  
+✅ Multinomial 教學  
+✅ Mixture Method 教學  
+✅ GitHub 統計作品集
+
+---
+
+# 🌟 專案亮點
+
+這個專案不只是抽樣程式，而是把：
+
+- 數學理論
+- 抽樣演算法
+- GUI 操作
+- 圖形分析
+- 模擬驗證
+
+整合成完整互動式展示系統。
+
+---
+
+# 📬 Author
+
+Made by **half-py**
+
+GitHub: https://github.com/half-py/hw5
