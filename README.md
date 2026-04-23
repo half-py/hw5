@@ -110,37 +110,21 @@ $$
 - 機率向量：
 
 $$
-<<<<<<< HEAD
 (p_1,p_2,\dots,p_k), \quad \sum p_i=1
-=======
-(X_1, X_2, \dots, X_k) \sim \mathrm{Multinomial}(n; p_1, p_2, \dots, p_k)
->>>>>>> 0002ae676b57bedac440061a586ccea7893086bd
 $$
 
 ### Step 1：抽第一類
 
 $$
-<<<<<<< HEAD
 X_1 \sim Binomial(n,p_1)
 $$
 
 ### Step 2：抽第二類
-=======
-X_1 \sim \mathrm{Binomial}(n, p_1)
-$$
-
-$$
-X_2 \mid X_1 \sim 
-\mathrm{Binomial}
-\left(n-X_1, \frac{p_2}{1-p_1}\right)
-$$
->>>>>>> 0002ae676b57bedac440061a586ccea7893086bd
 
 $$
 X_2 \sim Binomial\left(n-X_1,\frac{p_2}{1-p_1}\right)
 $$
 
-<<<<<<< HEAD
 ### Step 3：一般情況
 
 對於第 \(i\) 類：
@@ -148,13 +132,6 @@ $$
 $$
 X_i \sim Binomial\left(
 n-\sum_{j=1}^{i-1}X_j,\;
-=======
-$$
-X_i \sim 
-\mathrm{Binomial}
-\left(
-n-\sum_{j=1}^{i-1}X_j,
->>>>>>> 0002ae676b57bedac440061a586ccea7893086bd
 \frac{p_i}{1-\sum_{j=1}^{i-1}p_j}
 \right)
 $$
@@ -162,38 +139,13 @@ $$
 ### Step 4：最後一類補齊
 
 $$
-<<<<<<< HEAD
 X_k=n-\sum_{i=1}^{k-1}X_i
-=======
-X_k = n - \sum_{i=1}^{k-1}X_i
-$$
-
-### 理論公式
-
-期望值：
-
-$$
-E[X_i] = n p_i
-$$
-
-變異數：
-
-$$
-\mathrm{Var}(X_i) = n p_i (1-p_i)
-$$
-
-協方差（當 $i \neq j$）：
-
-$$
-\mathrm{Cov}(X_i, X_j) = -n p_i p_j
->>>>>>> 0002ae676b57bedac440061a586ccea7893086bd
 $$
 
 ---
 
 ## 📌 理論公式
 
-<<<<<<< HEAD
 ### 期望值
 
 $$
@@ -218,8 +170,6 @@ $$
 
 目標分布：
 
-=======
->>>>>>> 0002ae676b57bedac440061a586ccea7893086bd
 $$
 P(X=j)=
 \begin{cases}
@@ -227,21 +177,6 @@ P(X=j)=
 0.09,& j=6,8,10,12,14
 \end{cases}
 $$
-<<<<<<< HEAD
-=======
-
-$$
-Z \sim \mathrm{Bernoulli}(0.55)
-$$
-
-$$
-X=
-\begin{cases}
-\mathrm{Uniform}\{5,7,9,11,13\}, & 0.55 \\
-\mathrm{Uniform}\{6,8,10,12,14\}, & 0.45
-\end{cases}
-$$
->>>>>>> 0002ae676b57bedac440061a586ccea7893086bd
 
 ---
 
