@@ -26,21 +26,13 @@
 ✅ GUI 互動式操作介面（Streamlit）  
 ✅ 理論值 vs 模擬值比較  
 ✅ 分布圖形視覺化  
-✅ Covariance Matrix 驗證  
+✅ 檢視Covariance Matrix 
 ✅ 可調參數實驗  
-✅ 適合課堂展示 / 作業 / 統計作品集
+
 
 ---
 
 # 🖥️ GUI Preview
-
-截圖展示：
-
-```md
-![主畫面](images/gui-main.png)
-![Multinomial](images/gui-multinomial.png)
-![Mixture](images/gui-mixture.png)
-```
 
 ### 主畫面
 
