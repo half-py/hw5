@@ -34,7 +34,7 @@
 
 # 🖥️ GUI Preview
 
-將你的截圖放進 `images/` 資料夾後即可展示：
+截圖展示：
 
 ```md
 ![主畫面](images/gui-main.png)
@@ -230,30 +230,6 @@ $$
 - NumPy
 - Pandas
 - Matplotlib
-
----
-
-# 🎓 適合用途
-
-✅ Simulation Methods 作業  
-✅ 統計課報告展示  
-✅ Multinomial 教學  
-✅ Mixture Method 教學  
-✅ GitHub 統計作品集
-
----
-
-# 🌟 專案亮點
-
-這個專案不只是抽樣程式，而是把：
-
-- 數學理論
-- 抽樣演算法
-- GUI 操作
-- 圖形分析
-- 模擬驗證
-
-整合成完整互動式展示系統。
 
 ---
 
